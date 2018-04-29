@@ -1,0 +1,56 @@
+/**
+* Tencent is pleased to support the open source community by making
+* WeUI-WXSS available.
+* 
+* Copyright (C) 2017 THL A29 Limited, a Tencent company.
+* All rights reserved.
+* 
+* Licensed under the MIT License (the "License"); you may not use
+* this file except in compliance with the License. You may obtain a copy of
+* the License at
+* 
+*       http://opensource.org/licenses/MIT
+* 
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS,
+* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+* See the License for the specific language governing permissions and
+* limitations under the License.
+*/
+
+@import "base/reset.scss";
+
+@import "widget/weui-cell/weui-cell.scss";
+@import "widget/weui-cell/weui-access.scss";
+@import "widget/weui-cell/weui-check.scss";
+@import "widget/weui-cell/weui-form.scss";
+@import "widget/weui-cell/weui-switch.scss";
+@import "widget/weui-cell/weui-uploader.scss";
+
+@import "./widget/weui-page/weui-article.scss";
+@import "./widget/weui-page/weui-msg.scss";
+
+@import "widget/weui-flex/weui-flex.scss";
+
+@import "widget/weui-button/weui-button.scss";
+
+@import "./widget/weui-agree/weui-agree.scss";
+
+@import "./widget/weui-footer/weui-footer.scss";
+
+@import "./widget/weui-grid/weui-grid.scss";
+
+@import "./widget/weui-loading/weui-loading.scss";
+
+@import "./widget/weui-tips/weui-badge.scss";
+@import "./widget/weui-tips/weui-loadmore.scss";
+
+@import "./widget/weui-panel/weui-panel.scss";
+
+@import "./widget/weui-media-box/weui-media-box.scss";
+
+@import "./widget/weui-progress/weui-progress.scss";
+
+@import "./widget/weui-tab/weui-tab.scss";
+
+@import "./widget/weui-searchbar/weui-searchbar.scss";

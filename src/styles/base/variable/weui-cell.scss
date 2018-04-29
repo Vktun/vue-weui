@@ -1,0 +1,36 @@
+@function strip-units($number) {
+  @return $number / ($number * 0 + 1);
+}
+
+$base-font-size: 16px !default;
+@function pxToem($target-size, $context:$base-font-size) {
+  @if not unitless($target-size) {
+    $target-size: strip-units($target-size);
+  }
+  @if not unitless($context) {
+    $context: strip-units($context);
+  }
+  @return ($target-size / $context) * 1em;
+}
+
+$weuiCellBg:#FFFFFF;
+$weuiCellBorderColor:#D9D9D9;
+$weuiCellGapV:10px;
+$weuiCellGapH:15px;
+$weuiCellInnerGapH:.35em;
+$weuiCellFontSize:17px;
+$weuiCellHeight: 44px;
+$weuiCellHeightEm: pxToem($weuiCellHeight / $weuiCellFontSize);
+$weuiCellTipsFontSize:14px;
+$weuiCellLabelWidth:105px;
+$weuiCellActiveBg: #ECECEC;
+$weuiCellLineHeight: pxToem(($weuiCellHeight - 2 * $weuiCellGapV) / $weuiCellFontSize); // 高度为44px，减去上下padding的行高
+$weuiCellsMarginTop:pxToem(20 / $weuiCellFontSize);
+// weui switch
+$weuiSwitchHeight: 32px;
+// weui uploader
+$weuiUploaderBorderColor:#D9D9D9;
+$weuiUploaderActiveBorderColor:#999999;
+$weuiUploaderFileSpacing: 9px;
+$weuiUploaderSize: 79px;
+$weuiUploaderBorderWidth: 1px;
