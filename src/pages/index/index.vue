@@ -5,7 +5,7 @@
     :autoplay="autoplay" :interval="interval" :duration="duration">
     <block v-for="(url,index) in imgUrls" :key="index">
       <swiper-item>
-        <image :src="url" class="slide-image" width="355" height="150"/>
+        <image :src="url" class="slide-image" width="100%" height="150"/>
       </swiper-item>
     </block>
     </swiper>
@@ -18,13 +18,13 @@
             </div>
             <p class="weui-grid__label">今日菜谱</p>
             </a>
-             <a href="javascript:;" class="weui-grid">
+             <a href="/pages/prebook/main" class="weui-grid">
              <div class="weui-grid__icon">
                 <img src="../../../static/images/icon_tabbar.png" alt="">
             </div>
             <p class="weui-grid__label">预订免排队</p>
              </a>
-              <a href="javascript:;" class="weui-grid">
+              <a href="/pages/discount/main" class="weui-grid">
              <div class="weui-grid__icon">
                 <img src="../../../static//images/icon_tabbar.png" alt="">
             </div>
@@ -32,10 +32,11 @@
               </a>
             </div>
       </div>
-      <div class="weui-cells">
-        <button  class="weui-btn weui-btn_warn" @click="changePlayMode">{{btnValue}}</button>
-      </div>
-    </div>
+        </div>
+     <div class="weui-cells__title">热门推荐 <a class="pull-right"><strong>更多</strong></a></div>
+        <div class="weui-cells">
+          <itemList :data="suggestList" height="100"></itemList>
+        </div>
     </div>
 </div>
   
@@ -43,7 +44,7 @@
 
 <script>
 import card from "@/components/card";
-
+import itemList from "@/components/itemList";
 export default {
   data() {
     return {
@@ -58,12 +59,45 @@ export default {
         "http://img06.tooopen.com/images/20160818/tooopen_sy_175866434296.jpg",
         "http://img06.tooopen.com/images/20160818/tooopen_sy_175833047715.jpg"
       ],
-      btnValue: "播放"
+      btnValue: "播放",
+      suggestList: [
+        {
+          title: "菜1",
+          id: 1,
+          imgUrl:
+            "http://7xkkc0.media1.z0.glb.clouddn.com/image/food/TIM20180430230753.png"
+        },
+        {
+          title: "菜2",
+          id: 2,
+          imgUrl:
+            "http://7xkkc0.media1.z0.glb.clouddn.com/image/food/TIM20180430230840.png"
+        },
+        {
+          title: "菜3",
+          id: 3,
+          imgUrl:
+            "http://7xkkc0.media1.z0.glb.clouddn.com/image/food/TIM20180430230853.png"
+        },
+        {
+          title: "菜4",
+          id: 4,
+          imgUrl:
+            "http://7xkkc0.media1.z0.glb.clouddn.com/image/food/TIM20180430230911.png"
+        },
+        {
+          title: "菜5",
+          id: 5,
+          imgUrl:
+            "http://7xkkc0.media1.z0.glb.clouddn.com/image/food/TIM20180430230753.png"
+        }
+      ]
     };
   },
 
   components: {
-    card
+    card,
+    itemList
   },
 
   methods: {
@@ -103,15 +137,11 @@ export default {
 .layout {
   height: 100%;
 }
-.badge_n {
-  position: absolute;
-  top: -2px;
-  right: -13px;
+.swaper {
+  width: 100%;
 }
-.bage_o {
-  position: absolute;
-  top: 0;
-  right: -6px;
+.slide-image {
+  width: 100%;
 }
 .userinfo {
   display: flex;

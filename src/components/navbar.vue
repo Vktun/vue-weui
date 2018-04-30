@@ -29,9 +29,7 @@ export default {
       default: false
     }
   },
-  created() {
-    console.log(this.column);
-  }
+  created() {}
 };
 </script>
  <style lang="less" scoped>
