@@ -1,14 +1,41 @@
 <template>
 <div class="page">
     <div class="page__bd layout">
-       <swiper :indicator-dots="indicatorDots"
-  :autoplay="autoplay" :interval="interval" :duration="duration">
-  <block v-for="(url,index) in imgUrls" :key="index">
-    <swiper-item>
-      <image :src="url" class="slide-image" width="355" height="150"/>
-    </swiper-item>
-  </block>
-</swiper>
+          <swiper :indicator-dots="indicatorDots"
+    :autoplay="autoplay" :interval="interval" :duration="duration">
+    <block v-for="(url,index) in imgUrls" :key="index">
+      <swiper-item>
+        <image :src="url" class="slide-image" width="355" height="150"/>
+      </swiper-item>
+    </block>
+    </swiper>
+    <div class="page__bd page__bd_spacing">
+      <div class="weui-cells">
+        <div class="weui-grids">
+          <a href="/pages/dishes/main" class="weui-grid">
+          <div class="weui-grid__icon">
+                <img src="../../../static/images/icon_tabbar.png" alt="">
+            </div>
+            <p class="weui-grid__label">今日菜谱</p>
+            </a>
+             <a href="javascript:;" class="weui-grid">
+             <div class="weui-grid__icon">
+                <img src="../../../static/images/icon_tabbar.png" alt="">
+            </div>
+            <p class="weui-grid__label">预订免排队</p>
+             </a>
+              <a href="javascript:;" class="weui-grid">
+             <div class="weui-grid__icon">
+                <img src="../../../static//images/icon_tabbar.png" alt="">
+            </div>
+            <p class="weui-grid__label">今日优惠</p>
+              </a>
+            </div>
+      </div>
+      <div class="weui-cells">
+        <button  class="weui-btn weui-btn_warn" @click="changePlayMode">{{btnValue}}</button>
+      </div>
+    </div>
     </div>
 </div>
   
@@ -23,14 +50,15 @@ export default {
       motto: "Hello World",
       userInfo: {},
       indicatorDots: false,
-      autoplay: false,
+      autoplay: true,
       interval: 5000,
       duration: 1000,
       imgUrls: [
         "http://img02.tooopen.com/images/20150928/tooopen_sy_143912755726.jpg",
         "http://img06.tooopen.com/images/20160818/tooopen_sy_175866434296.jpg",
         "http://img06.tooopen.com/images/20160818/tooopen_sy_175833047715.jpg"
-      ]
+      ],
+      btnValue: "播放"
     };
   },
 
@@ -57,6 +85,10 @@ export default {
     },
     clickHandle(msg, ev) {
       console.log("clickHandle:", msg, ev);
+    },
+    changePlayMode() {
+      this.autoplay = !this.autoplay;
+      this.btnValue = "播放状态" + this.autoplay;
     }
   },
 
