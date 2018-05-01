@@ -2,6 +2,7 @@
   <div>
     <ul class="container log-list">
       <li v-for="(log, index) in logs" :class="{ red: aa }" :key="index" class="log-item">
+        <div>你当前启动时间：</div>
         <card :text="(index + 1) + ' . ' + log"></card>
       </li>
     </ul>

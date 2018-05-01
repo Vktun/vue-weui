@@ -14,19 +14,19 @@
         <div class="weui-grids">
           <a href="/pages/dishes/main" class="weui-grid">
           <div class="weui-grid__icon">
-                <img src="../../../static/images/icon_tabbar.png" alt="">
+                <img :src="iurl" alt="">
             </div>
             <p class="weui-grid__label">今日菜谱</p>
             </a>
              <a href="/pages/prebook/main" class="weui-grid">
              <div class="weui-grid__icon">
-                <img src="../../../static/images/icon_tabbar.png" alt="">
+                <img :src="iurl" alt="">
             </div>
             <p class="weui-grid__label">预订免排队</p>
              </a>
               <a href="/pages/discount/main" class="weui-grid">
              <div class="weui-grid__icon">
-                <img src="../../../static//images/icon_tabbar.png" alt="">
+                <img :src="iurl" alt="">
             </div>
             <p class="weui-grid__label">今日优惠</p>
               </a>
@@ -35,7 +35,7 @@
         </div>
      <div class="weui-cells__title">热门推荐 <a class="pull-right"><strong>更多</strong></a></div>
         <div class="weui-cells">
-          <itemList :data="suggestList" height="100"></itemList>
+          <itemlist :data="suggestList" height="80" mode="aspectFill" lazy_load ></itemlist>
         </div>
     </div>
 </div>
@@ -44,7 +44,8 @@
 
 <script>
 import card from "@/components/card";
-import itemList from "@/components/itemList";
+import itemlist from "@/components/items/itemList";
+import icontabbar from "@/images/icon_tabbar.png";
 export default {
   data() {
     return {
@@ -60,36 +61,90 @@ export default {
         "http://img06.tooopen.com/images/20160818/tooopen_sy_175833047715.jpg"
       ],
       btnValue: "播放",
+      iurl: icontabbar,
       suggestList: [
         {
           title: "菜1",
           id: 1,
           imgUrl:
-            "http://7xkkc0.media1.z0.glb.clouddn.com/image/food/TIM20180430230753.png"
+            "http://7xkkc0.media1.z0.glb.clouddn.com/image/food/TIM20180430230753.png",
+          tags: [
+            {
+              text: "火辣",
+              color: "danger",
+              size: "small"
+            },
+            {
+              text: "重口味",
+              color: "danger",
+              size: "small"
+            }
+          ],
+          desc: "very yummy ,welcome to you ! we have more discount!"
         },
         {
           title: "菜2",
           id: 2,
           imgUrl:
-            "http://7xkkc0.media1.z0.glb.clouddn.com/image/food/TIM20180430230840.png"
+            "http://7xkkc0.media1.z0.glb.clouddn.com/image/food/TIM20180430230840.png",
+          tags: [
+            {
+              text: "微辣",
+              color: "warning",
+              size: "small"
+            },
+            {
+              text: "优惠",
+              color: "danger",
+              size: "small"
+            }
+          ],
+          desc: "very yummy ,welcome to you ! we have more discount!"
         },
         {
           title: "菜3",
           id: 3,
           imgUrl:
-            "http://7xkkc0.media1.z0.glb.clouddn.com/image/food/TIM20180430230853.png"
+            "http://7xkkc0.media1.z0.glb.clouddn.com/image/food/TIM20180430230853.png",
+          tags: [
+            {
+              text: "清淡",
+              color: "",
+              size: "small"
+            },
+            {
+              text: "优惠",
+              color: "danger",
+              size: "small"
+            }
+          ],
+          desc: "very yummy ,welcome to you ! we have more discount!"
         },
         {
           title: "菜4",
           id: 4,
           imgUrl:
-            "http://7xkkc0.media1.z0.glb.clouddn.com/image/food/TIM20180430230911.png"
+            "http://7xkkc0.media1.z0.glb.clouddn.com/image/food/TIM20180430230911.png",
+          tags: [
+            {
+              text: "微辣",
+              color: "warning",
+              size: "small"
+            },
+            {
+              text: "优惠",
+              color: "danger",
+              size: "small"
+            }
+          ],
+          desc: "very yummy ,welcome to you ! we have more discount!"
         },
         {
           title: "菜5",
           id: 5,
           imgUrl:
-            "http://7xkkc0.media1.z0.glb.clouddn.com/image/food/TIM20180430230753.png"
+            "http://7xkkc0.media1.z0.glb.clouddn.com/image/food/TIM20180430230753.png",
+          desc: "我是没有标签的"
         }
       ]
     };
@@ -97,7 +152,7 @@ export default {
 
   components: {
     card,
-    itemList
+    itemlist
   },
 
   methods: {
