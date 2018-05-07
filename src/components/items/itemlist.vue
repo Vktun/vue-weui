@@ -12,16 +12,16 @@
                </p>
               <p class="weui-media-box__desc"> {{item.desc}}</p>
             </div>
-            <button class="pull-right weui-btn weui-btn_mini weui-btn_primary" @click="showChart">+</button>
+            <button class="pull-right weui-btn weui-btn_mini weui-btn_primary" @click="add_to_shopcar">+</button>
         </div>
-        <mask :show="maskShow"></mask>
+        <shopcar :show="maskShow" ></shopcar>
   </div>
  </div>
 </template>
 
 <script>
 import tag from "@/components/tag";
-import mask from "@/components/mask";
+import shopcar from "@/components/shopcar";
 export default {
   name: "itemlist",
   data() {
@@ -60,13 +60,14 @@ export default {
           ? "weui-media-box_small-appmsg"
           : "weui-media-box_appmsg";
     },
-    showChart() {
+    add_to_shopcar() {
+      // this.maskShow = false;
       this.maskShow = true;
     }
   },
   components: {
     tag,
-    mask
+    shopcar
   }
 };
 </script>
