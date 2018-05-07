@@ -36,8 +36,8 @@ export default {
 
 <style scoped>
 .payBtn {
-  height: 40px;
-  line-height: 40px;
+  height: 48px;
+  line-height: 48px;
   background-color: #e6a23c;
   font-size: larger;
   text-align: center;
@@ -49,16 +49,16 @@ export default {
   background-color: #fff;
 }
 .shopcar_icon {
-  width: 40px;
-  height: 40px;
+  width: 48px;
+  height: 48px;
 }
 .shopcar_right {
   background-color: #e6a23c;
 }
 .sum{
     padding-left: 20px;
-    height: 40px;
-    line-height: 40px;
+    height: 48px;
+    line-height: 48px;
 }
 .amount{
     color: red;
