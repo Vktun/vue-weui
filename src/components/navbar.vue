@@ -18,6 +18,7 @@
 </template>
 
 <script>
+// 暂时不支持slots 暂时不启用
 export default {
   name: "navbar",
   data() {
@@ -27,7 +28,8 @@ export default {
     column: {
       type: Boolean,
       default: false
-    }
+    },
+    data: Array
   },
   created() {}
 };
