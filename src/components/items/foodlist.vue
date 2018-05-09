@@ -6,7 +6,7 @@
               <img :src="item.imgUrl" :mode="mode" :lazy-load="lazy_load" alt="" class="imgStyle" v-bind:style="{height: height + 'px' , width: height+'px'}">
               </div>
             <div class="weui-cell__bd">
-              <h4 class="weui-media-box__title">{{item.title}}</h4>
+              <h4 class="weui-media-box__title">{{item.title}} <span class="price">{{item.price}}￥</span></h4>
                <p v-if="item.tags && item.tags.length>0" class="weui-media-box__desc">
                   <tag v-for="(t,i) in item.tags" :key="i" :text="t.text" :size="t.size" :type="t.color"></tag>
                </p>
@@ -72,7 +72,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .imgStyle {
   width: 60px;
   height: 60px;
@@ -81,5 +81,10 @@ export default {
 }
 .weui-tag {
   margin-left: 5px;
+}
+.price{
+  float: right;
+  color: red;
+  margin-right: 20px;
 }
 </style>

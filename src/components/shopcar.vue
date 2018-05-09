@@ -3,7 +3,7 @@
         <div class="weui-flex">
             <div class="weui-flex__item shopcar_left">
                 <div class="weui-flex">
-                    <image class="shopcar_icon"  mode="aspectFill" src="http://7xkkc0.media1.z0.glb.clouddn.com/shopcar.jpg"></image>
+                    <image class="shopcar_icon"  mode="aspectFill" src="http://7xkkc0.media1.z0.glb.clouddn.com/shopcar.jpg"/>
                     <div class="weui-flex__item sum">
                         合计：<div class="amount">100</div>￥
                     </div>
@@ -55,13 +55,13 @@ export default {
 .shopcar_right {
   background-color: #e6a23c;
 }
-.sum{
-    padding-left: 20px;
-    height: 48px;
-    line-height: 48px;
+.sum {
+  padding-left: 20px;
+  height: 48px;
+  line-height: 48px;
 }
-.amount{
-    color: red;
-    display: inline-block;
+.amount {
+  color: red;
+  display: inline-block;
 }
 </style>
