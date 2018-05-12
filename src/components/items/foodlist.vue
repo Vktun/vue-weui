@@ -12,7 +12,7 @@
                </p>
               <p class="weui-media-box__desc"> {{item.desc}}</p>
             </div>
-            <button class="pull-right weui-btn weui-btn_mini weui-btn_primary btn_radius" @click="add_to_shopcar">+</button>
+            <button class="pull-right weui-btn weui-btn_mini weui-btn_primary" @click="add_to_shopcar">+</button>
         </div>
         <shopcar :show="maskShow" ></shopcar>
   </div>
