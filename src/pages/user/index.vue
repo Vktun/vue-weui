@@ -17,10 +17,10 @@ export default {
     upload() {
       const _this = this;
       wx.request({
-        url: "test.php", // 仅为示例，并非真实的接口地址
+        url: "", // 请求获取token用户，验证此用户是否合法
         data: {
-          x: "",
-          y: ""
+          sessionKey: "",
+          flag: "" // 图片和简介的共同标识
         },
         header: {
           "content-type": "application/json" // 默认值
@@ -40,9 +40,11 @@ export default {
                   console.log("error: " + error);
                 },
                 {
-                  region: "ECN",
+                  region: "SCN",
                   domain: response.domain,
-                  uptoken: response.token
+                  uptoken: response.token,
+                  sessionKey: "",
+                  flag: "" // 图片和简介的共同标识
                 },
                 res => {
                   console.log("上传进度", res.progress);
