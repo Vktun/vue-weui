@@ -1,5 +1,5 @@
 // created by gpake
-(function() {
+(function () {
   var config = {
     qiniuRegion: "",
     qiniuImageURLPrefix: "",
@@ -57,7 +57,7 @@
     if (config.qiniuUploadToken) {
       doUpload(filePath, success, fail, options, progress, cancelTask);
     } else if (config.qiniuUploadTokenURL) {
-      getQiniuToken(function() {
+      getQiniuToken(function () {
         doUpload(filePath, success, fail, options, progress, cancelTask);
       });
     } else if (config.qiniuUploadTokenFunction) {
@@ -89,24 +89,30 @@
     }
     var url = uploadURLFromRegionCode(config.qiniuRegion);
     var formData = {
-      token: config.qiniuUploadToken
+      token: encodeURI(config.qiniuUploadToken)
     };
     for (let i = 0, len = filePath.length; i < len; i++) {
-      var fileName = filePath[i].split("//")[1];
+      var filetype = /\.[^.]+$/.exec(filePath[i]);
+      var fileName = filePath[i];
       if (options && options.key) {
-        fileName = options.key;
+        fileName = options.key + new Date().getHours() + "" + new Date().getMinutes() + "" + new Date().getSeconds() + new Date().getMilliseconds() + i + filetype;
       }
       if (!config.qiniuShouldUseQiniuFileName) {
-        formData["key"] = fileName;
-        formData["flag"] = options.flag;
-        formData["sessionKey"] = options.sessionKey;
+        console.log(fileName)
+        formData["key"] = encodeURI(fileName);
+        formData["flag"] = encodeURI(options.flag);
+        formData["sessionKey"] = encodeURI(options.sessionKey);
       }
+      console.log(formData)
       var uploadTask = wx.uploadFile({
         url: url,
-        filePath: filePath,
+        filePath: filePath[i],
         name: "file",
+        header: {
+          "Content-Type": "multipart/form-data"
+        },
         formData: formData,
-        success: function(res) {
+        success: function (res) {
           var dataString = res.data;
           if (res.data.hasOwnProperty("type") && res.data.type === "Buffer") {
             dataString = String.fromCharCode.apply(null, res.data.data);
@@ -127,7 +133,7 @@
             }
           }
         },
-        fail: function(error) {
+        fail: function (error) {
           console.error(error);
           if (fail) {
             fail(error);
@@ -149,7 +155,7 @@
   function getQiniuToken(callback) {
     wx.request({
       url: config.qiniuUploadTokenURL,
-      success: function(res) {
+      success: function (res) {
         var token = res.data.uptoken;
         if (token && token.length > 0) {
           config.qiniuUploadToken = token;
@@ -162,10 +168,10 @@
           );
         }
       },
-      fail: function(error) {
+      fail: function (error) {
         console.error(
           "qiniu UploadToken is null, please check the init config or networking: " +
-            error
+          error
         );
       }
     });
@@ -175,19 +181,19 @@
     var uploadURL = null;
     switch (code) {
       case "ECN":
-        uploadURL = "https://up.qbox.me";
+        uploadURL = "https://up.qiniup.com";
         break;
       case "NCN":
-        uploadURL = "https://up-z1.qbox.me";
+        uploadURL = "https://up-z1.qiniup.com";
         break;
       case "SCN":
-        uploadURL = "https://up-z2.qbox.me";
+        uploadURL = "https://up-z2.qiniup.com";
         break;
       case "NA":
-        uploadURL = "https://up-na0.qbox.me";
+        uploadURL = "https://up-na0.qiniup.com";
         break;
       case "ASG":
-        uploadURL = "https://up-as0.qbox.me";
+        uploadURL = "https://up-as0.qiniup.com";
         break;
       default:
         console.error(

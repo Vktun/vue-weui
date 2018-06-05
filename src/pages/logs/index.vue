@@ -2,6 +2,7 @@
   <div>
     <button class="weui-btn weui-btn_primary" @click="getLogin">登录</button>
    <button class="weui-btn weui-btn_primary" @click="postUser">获取授权</button>
+    <button class="weui-btn weui-btn_primary" @click="chooseImage">上传图片</button>
     <ul class="log-list">
       <li v-for="(log, index) in logs" :class="{ red: aa }" :key="index" class="log-item">
         <div>你当前启动时间：</div>
@@ -14,7 +15,7 @@
 <script>
 import { formatTime } from "@/utils/index";
 import card from "@/components/card";
-
+import qiniuUploader from "@/utils/qiniuload.js";
 export default {
   components: {
     card
@@ -43,9 +44,9 @@ export default {
                 "content-type": "application/x-www-form-urlencoded"
               },
               success: function(resp) {
-                console.log(resp);
-                _this.sessionKey = resp.message;
-                wx.setStorageSync("sessionKey", resp.message);
+                console.log(resp)
+                _this.sessionKey = resp.data.result.message;
+                wx.setStorageSync("sessionKey", _this.sessionKey);
               }
             });
           } else {
@@ -57,7 +58,6 @@ export default {
     postUser() {
       const _this = this;
       console.log(_this.sessionKey);
-      console.log(wx.getStorageSync("sessionKey"));
       wx.request({
         url: "http://localhost:65167/api/AccountManage/PostUser",
         method: "POST",
@@ -77,6 +77,76 @@ export default {
         },
         success: function(res) {
           console.log(res);
+        }
+      });
+    },
+    chooseImage() {
+      wx.request({
+        url: "http://localhost:65167/api/Qiniu/GetUpToken",
+        method: "GET",
+        header: {
+          sessionKey: wx.getStorageSync("sessionKey")
+        },
+        success: function(response) {
+          wx.chooseImage({
+            success: function(resp) {
+              const tempFilePaths = resp.tempFilePaths;
+              console.log(resp)
+              const currentTime = new Date();
+              const time =
+                currentTime.getFullYear() +
+                "" +
+                (currentTime.getMonth() + 1) +
+                currentTime.getDay() +
+                "" +
+                currentTime.getHours() +
+                currentTime.getMinutes() +
+                "" +
+                currentTime.getSeconds();
+              qiniuUploader.upload(
+                tempFilePaths,
+                res => {
+                  wx.request({
+                    url: "http://localhost:65167/api/Galleries/PostGallery",
+                    method: "POST",
+                    data: {
+                      title: "测试的",
+                      introduction: "测试的介绍",
+                      categoryId: 1,
+                      isPublic: true,
+                      gallerytype: 0,
+                      flag: "string"
+                    },
+                    header: {
+                      sessionKey: wx.getStorageSync("sessionKey")
+                    },
+                    success: function(r) {
+                      console.log(r);
+                    }
+                  });
+                },
+                error => {
+                  console.log("error: " + error);
+                },
+                {
+                  region: "SCN",
+                  domain: response.data.result.domain,
+                  uptoken: response.data.result.token,
+                  sessionKey: wx.getStorageSync("sessionKey"),
+                  flag: wx.getStorageSync("sessionKey") + "/" + time, // 图片和简介的共同标识
+                  key: response.data.result.key + wx.getStorageSync("sessionKey")
+                },
+                res => {
+                  console.log("上传进度", res.progress);
+                  console.log("已经上传的数据长度", res.totalBytesSent);
+                  console.log(
+                    "预期需要上传的数据总长度",
+                    res.totalBytesExpectedToSend
+                  );
+                }
+              );
+            }
+          });
         }
       });
     }
