@@ -89,7 +89,7 @@
     }
     var url = uploadURLFromRegionCode(config.qiniuRegion);
     var formData = {
-      token: encodeURI(config.qiniuUploadToken)
+      'token': encodeURI(config.qiniuUploadToken)
     };
     for (let i = 0, len = filePath.length; i < len; i++) {
       var filetype = /\.[^.]+$/.exec(filePath[i]);
@@ -100,8 +100,8 @@
       if (!config.qiniuShouldUseQiniuFileName) {
         console.log(fileName)
         formData["key"] = encodeURI(fileName);
-        formData["flag"] = encodeURI(options.flag);
-        formData["sessionKey"] = encodeURI(options.sessionKey);
+        formData["x:flag"] = encodeURI(options.flag);
+        formData["x:sessionKey"] = encodeURI(options.sessionKey);
       }
       console.log(formData)
       var uploadTask = wx.uploadFile({

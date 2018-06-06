@@ -24,7 +24,8 @@ export default {
   data() {
     return {
       logs: [],
-      sessionKey: null
+      sessionKey: null,
+      flag: null
     };
   },
   mounted() {},
@@ -44,7 +45,7 @@ export default {
                 "content-type": "application/x-www-form-urlencoded"
               },
               success: function(resp) {
-                console.log(resp)
+                console.log(resp);
                 _this.sessionKey = resp.data.result.message;
                 wx.setStorageSync("sessionKey", _this.sessionKey);
               }
@@ -81,6 +82,19 @@ export default {
       });
     },
     chooseImage() {
+      const _this = this;
+      const currentTime = new Date();
+      const time =
+        currentTime.getFullYear() +
+        "" +
+        (currentTime.getMonth() + 1) +
+        currentTime.getDay() +
+        "" +
+        currentTime.getHours() +
+        currentTime.getMinutes() +
+        "" +
+        currentTime.getSeconds();
+      _this.flag = wx.getStorageSync("sessionKey") + "/" + time;
       wx.request({
         url: "http://localhost:65167/api/Qiniu/GetUpToken",
         method: "GET",
@@ -91,40 +105,11 @@ export default {
           wx.chooseImage({
             success: function(resp) {
               const tempFilePaths = resp.tempFilePaths;
-              console.log(resp)
-              const currentTime = new Date();
-              const time =
-                currentTime.getFullYear() +
-                "" +
-                (currentTime.getMonth() + 1) +
-                currentTime.getDay() +
-                "" +
-                currentTime.getHours() +
-                currentTime.getMinutes() +
-                "" +
-                currentTime.getSeconds();
+              console.log(resp);
+
               qiniuUploader.upload(
                 tempFilePaths,
-                res => {
-                  wx.request({
-                    url: "http://localhost:65167/api/Galleries/PostGallery",
-                    method: "POST",
-                    data: {
-                      title: "测试的",
-                      introduction: "测试的介绍",
-                      categoryId: 1,
-                      isPublic: true,
-                      gallerytype: 0,
-                      flag: "string"
-                    },
-                    header: {
-                      sessionKey: wx.getStorageSync("sessionKey")
-                    },
-                    success: function(r) {
-                      console.log(r);
-                    }
-                  });
-                },
+                res => {},
                 error => {
                   console.log("error: " + error);
                 },
@@ -133,8 +118,9 @@ export default {
                   domain: response.data.result.domain,
                   uptoken: response.data.result.token,
                   sessionKey: wx.getStorageSync("sessionKey"),
-                  flag: wx.getStorageSync("sessionKey") + "/" + time, // 图片和简介的共同标识
-                  key: response.data.result.key + wx.getStorageSync("sessionKey")
+                  flag: _this.flag, // 图片和简介的共同标识
+                  key:
+                    response.data.result.key + wx.getStorageSync("sessionKey")
                 },
                 res => {
                   console.log("上传进度", res.progress);
@@ -147,6 +133,28 @@ export default {
               );
             }
           });
+          _this.publishGaller();
+        }
+      });
+    },
+    publishGaller() {
+      const _this = this;
+      wx.request({
+        url: "http://localhost:65167/api/Galleries/PostGallery",
+        method: "POST",
+        data: {
+          title: "测试的",
+          introduction: "测试的介绍",
+          categoryId: 1,
+          isPublic: true,
+          gallerytype: 0,
+          flag: _this.flag
+        },
+        header: {
+          sessionKey: wx.getStorageSync("sessionKey")
+        },
+        success: function(r) {
+          console.log(r);
         }
       });
     }
